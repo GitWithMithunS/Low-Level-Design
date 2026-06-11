@@ -243,17 +243,12 @@ class TicTacToeGame{
     }
 
     public void startGame(){
-
-        Scanner sc = new Scanner(System.in);
-
         boolean continuePlay = true;
 
         while(continuePlay){
 
             play();
-
             notifyScores();
-
             System.out.println("\nPlay another round? (Y/N)");
 
             String choice = sc.next();
@@ -274,7 +269,7 @@ class TicTacToeGame{
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n===== SCOREBOARD =====\n");
+        sb.append("===== SCOREBOARD =====\n");
 
         for(Player p : players){
             sb.append(p.getName())
@@ -297,14 +292,14 @@ class TicTacToeGame{
         while(!gameOver()) {
             //using try catch block to handle the invlaid inputs
             try {
-                int r = sc.nextInt();
-                int c = sc.nextInt();
-
 
                 Player currentPlayer = players.getFirst();
                 Symbol currsmb = currentPlayer.getSymbol();
 
-                System.out.println(currentPlayer.getName() + " , please choose you cell's row and colum ");
+
+                System.out.println(currentPlayer.getName() + " , please choose you cell's (row and colum) ");
+                int r = sc.nextInt();
+                int c = sc.nextInt();
 
                 if(!rules.isValid(gameBoard , r , c )) {
                     System.out.println(currentPlayer.getName() + " , you have entered an invalid cell ");
@@ -357,9 +352,9 @@ public class Main{
         Scanner sc = new Scanner(System.in);
         TicTacToeGame game = GameFactory.creategame(Game.STANDARD , rules , 3 , sc);
 
-        System.out.println("Enter the first player name ");
+        System.out.print("Enter the first player name : ");
         String name1 = sc.nextLine();
-        System.out.println("Enter the second player name ");
+        System.out.print("Enter the second player name : ");
         String name2 = sc.nextLine();
 
         //adding players to sytart the game
