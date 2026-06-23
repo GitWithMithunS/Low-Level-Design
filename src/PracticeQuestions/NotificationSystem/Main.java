@@ -1,6 +1,8 @@
 package PracticeQuestions.NotificationSystem;
 
 import java.time.Instant;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 //Notification creation
@@ -32,7 +34,8 @@ abstract class INotificationDecorator implements INotification{
 }
 
 class TimeStampNotificationDecorator extends INotificationDecorator{
-    private final Instant instant = Instant.now();
+//    private final Instant instant = Instant.now();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss");
 
     TimeStampNotificationDecorator(INotification notification){
         super(notification);
@@ -40,7 +43,7 @@ class TimeStampNotificationDecorator extends INotificationDecorator{
 
     @Override
     public String getContent() {
-        return "[" + instant.getEpochSecond() +  "] : " + notification.getContent();
+        return "[" +  LocalDateTime.now().format(formatter)  +  "] : " + notification.getContent();
     }
 }
 
@@ -190,13 +193,14 @@ class NotificationService{
     private NotificationService(){
     }
 
-    public static NotificationService getNotificationServiceInstance(){
-        if(instance == null){
-            instance = new NotificationService();
-        }
-        return instance;
+    //Bill Pugh / Initialization-on-Demand Holder - Singleton design pattern
+    private static class Holder{
+        private static final NotificationService instance = new NotificationService();
     }
 
+    public static NotificationService getNotificationServiceInstance(){
+        return Holder.instance;
+    }
 
     public void setObservable(NotificationObservable observable){
         this.observable = observable;
@@ -207,10 +211,14 @@ class NotificationService{
         notificationsHistory.add(notification);
     }
 
-    public void getNotificationHistory(){
+    public void getNotificationHistoryContent(){
         for(INotification n :  notificationsHistory){
             System.out.println(n.getContent());
         }
+    }
+
+    public  List<INotification> getNotificationHistory(){
+        return notificationsHistory;
     }
 }
 
@@ -218,13 +226,13 @@ public class Main {
     public static void main(String args[]){
         System.out.println("----NOTIFICATION SYSTEM----");
 
-        //create all notifiactions strategy were u want to be notified
-        INotificationStrategy sms = new SmsNotificationStrategy("9797976939393");
-        INotificationStrategy email = new EmailNotificationStrategy("abc@gamil.com");
-        INotificationStrategy popUp = new PopUpNotificationStrategy();
-
         //setup notification engine
         NotificationEngine notificationEngine = new NotificationEngine();
+        //create all notifications strategy were u want to be notified
+        INotificationStrategy sms = new SmsNotificationStrategy("9797979393");
+        INotificationStrategy email = new EmailNotificationStrategy("abc@gamil.com");
+        INotificationStrategy popUp = new PopUpNotificationStrategy();
+        //attach them to the observer engine
         notificationEngine.addNotificationStrategy(sms);
         notificationEngine.addNotificationStrategy(email);
         notificationEngine.addNotificationStrategy(popUp);
@@ -235,13 +243,13 @@ public class Main {
         notificationObservable.addObserver(new Logger());
         notificationObservable.addObserver(notificationEngine);
 
-        //create a notification
-        INotification notification = new SimpleNotification("The System that i am working is ready");
+        //create a notification which is to be sent
+        INotification notification = new SimpleNotification("The Notification System is ready.");
         //decorate them with signature and timestamp
         notification = new TimeStampNotificationDecorator(notification);
         notification = new SignatureNotificationDecorator(notification , "Mithun S");
 
-        //create an instane of notifcications ervice and sent the notification;
+        //create an instane of notifcication service and sent the notification;
         NotificationService service = NotificationService.getNotificationServiceInstance();
         service.setObservable(notificationObservable);
         service.sendNotification(notification);
