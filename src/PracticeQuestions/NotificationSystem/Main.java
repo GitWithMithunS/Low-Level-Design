@@ -188,7 +188,7 @@ class NotificationEngine implements IObserver{
 class NotificationService{
     private final List<INotification> notificationsHistory = new ArrayList<>();
     private NotificationObservable observable;
-    private static NotificationService instance;
+//    private static NotificationService instance;
 
     private NotificationService(){
     }
