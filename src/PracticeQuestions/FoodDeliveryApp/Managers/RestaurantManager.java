@@ -1,4 +1,4 @@
-package PracticeQuestions.FoodDeliveryApp.Managers;
+package PracticeQuestions.FoodDeliveryApp.managers;
 
 import PracticeQuestions.FoodDeliveryApp.models.Restaurant;
 
@@ -17,7 +17,7 @@ public class RestaurantManager {
         private static final RestaurantManager instance = new RestaurantManager();
     }
 
-    public RestaurantManager getInstance() {
+    public static RestaurantManager getInstance() {
         return Holder.instance;
     }
 

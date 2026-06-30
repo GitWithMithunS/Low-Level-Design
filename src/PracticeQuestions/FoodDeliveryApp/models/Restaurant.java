@@ -10,7 +10,7 @@ public class Restaurant {
     private String location;
     private final List<MenuItem> menu;
 
-    Restaurant(String name , String location ){
+    public Restaurant(String name , String location ){
         this.id = COUNTER.getAndIncrement();
         this.name = name;
         this.location = location;

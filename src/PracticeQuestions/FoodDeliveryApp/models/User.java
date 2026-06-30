@@ -11,7 +11,7 @@ public class User {
     private String phoneNumber;
     private Cart cart;
 
-    User(String name , String address , String phoneNumber){
+    public User(String name, String address, String phoneNumber){
         if (phoneNumber == null || phoneNumber.length() != 10) {
             throw new IllegalArgumentException("Phone number must contain exactly 10 digits.");
         }

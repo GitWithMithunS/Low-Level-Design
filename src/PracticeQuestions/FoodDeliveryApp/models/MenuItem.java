@@ -8,7 +8,7 @@ public class MenuItem {
     private String name;
     private Double price;
 
-    MenuItem(String name , Double price) {
+    public MenuItem(String name, Double price) {
         this.id = COUNTER.getAndIncrement();
         this.name = name;
         this.price = price;

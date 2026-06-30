@@ -1,0 +1,25 @@
+package PracticeQuestions.FoodDeliveryApp.models;
+
+import java.util.Map;
+
+public class DeliveryOrder extends Order{
+    private String deliveryAddress;
+
+    public DeliveryOrder(User user, Restaurant restaurant, Map<MenuItem, Integer> items, double cost , String scheduled, String deilverAddress) {
+        super(user, restaurant, items, cost , scheduled);
+        this.deliveryAddress = deilverAddress;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    @Override
+    public String getType() {
+        return "";
+    }
+}
