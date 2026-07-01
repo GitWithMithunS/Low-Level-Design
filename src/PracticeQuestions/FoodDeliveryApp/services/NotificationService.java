@@ -31,10 +31,11 @@ public class NotificationService {
         }
 
         System.out.println("\nTotal          : ₹" + order.getCost());
+        System.out.println("Order Type : " + order.getType());
+        System.out.println(order.getAddress());
         System.out.println("Scheduled Time : " + order.getScheduled());
-
-        System.out.println("Payment        : Successful");
         System.out.println("Payment Status : " + order.getPaymentStatus());
+
         System.out.println("------------------------------------------------");
     }
 }

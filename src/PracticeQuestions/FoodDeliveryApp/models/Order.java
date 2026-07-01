@@ -1,5 +1,6 @@
 package PracticeQuestions.FoodDeliveryApp.models;
 
+import PracticeQuestions.FoodDeliveryApp.ENUM.OrderType;
 import PracticeQuestions.FoodDeliveryApp.ENUM.PaymentStatus;
 import PracticeQuestions.FoodDeliveryApp.strategies.PaymentStrategy;
 
@@ -78,5 +79,7 @@ public abstract class Order {
     }
 
     //to be implemented by the children
-    public abstract String getType();
+    public abstract OrderType getType();
+
+    public abstract String getAddress();
 }

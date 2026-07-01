@@ -1,5 +1,7 @@
 package PracticeQuestions.FoodDeliveryApp.models;
 
+import PracticeQuestions.FoodDeliveryApp.ENUM.OrderType;
+
 import java.util.Map;
 
 public class DeliveryOrder extends Order{
@@ -10,16 +12,15 @@ public class DeliveryOrder extends Order{
         this.deliveryAddress = deilverAddress;
     }
 
-    public String getDeliveryAddress() {
-        return deliveryAddress;
+    public String getAddress() {
+        return "Delivery Address : " + deliveryAddress;
     }
-
     public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
     }
 
     @Override
-    public String getType() {
-        return "";
+    public OrderType getType() {
+        return OrderType.DELIVERY;
     }
 }

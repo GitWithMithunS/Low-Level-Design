@@ -1,12 +1,14 @@
 package PracticeQuestions.FoodDeliveryApp.models;
 
+import PracticeQuestions.FoodDeliveryApp.ENUM.OrderType;
+
 import java.util.Map;
 
 public class PickUpOrder extends Order{
     private String restaurantAddress;
 
-    public String getRestaurantAddress() {
-        return restaurantAddress;
+    public String getAddress() {
+        return "Pick-Up Address : " + restaurantAddress;
     }
 
     public void setRestaurantAddress(String restaurantAddress) {
@@ -19,7 +21,7 @@ public class PickUpOrder extends Order{
     }
 
     @Override
-    public String getType(){
-        return "Pickup";
+    public OrderType getType(){
+        return OrderType.PICKUP;
     }
 }

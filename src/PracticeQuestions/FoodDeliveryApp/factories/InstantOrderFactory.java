@@ -14,10 +14,10 @@ public class InstantOrderFactory implements OrderFactory{
 
         if(orderType == OrderType.DELIVERY){
             String userAddress = user.getAddress();
-            return new DeliveryOrder(user , restaurant , items , cost , userAddress , scheduled);
+            return new DeliveryOrder(user , restaurant , items , cost ,  scheduled  ,userAddress);
         }else if(orderType == OrderType.PICKUP){
             String restaurantAddress = restaurant.getLocation();
-            return new PickUpOrder(user , restaurant , items , cost , restaurantAddress , scheduled);
+            return new PickUpOrder(user , restaurant , items , cost , scheduled , restaurantAddress);
         }
 
         return null;
