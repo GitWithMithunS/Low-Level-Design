@@ -33,7 +33,7 @@ public class FoodOrchestrator {
         for (MenuItem item : restaurant.getMenu()) {
             System.out.println(i++ + ". " +
                     item.getName() +
-                    " - ₹" +
+                    " - $" +
                     item.getPrice());
         }
     }
@@ -45,7 +45,7 @@ public class FoodOrchestrator {
 
     public void showCart(User user) {
         user.getCart().listOrderItems();
-        System.out.println("Total : ₹" + user.getCart().getCost());
+        System.out.println("Total : $" + user.getCart().getCost());
     }
 
     public Order checkout(User user, OrderType orderType, PaymentStrategy paymentStrategy) {
