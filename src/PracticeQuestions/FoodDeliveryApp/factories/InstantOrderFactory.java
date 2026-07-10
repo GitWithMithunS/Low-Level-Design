@@ -12,6 +12,7 @@ public class InstantOrderFactory implements OrderFactory{
     public Order createOrder(User user, Restaurant restaurant, Map<MenuItem, Integer> items, double cost, OrderType orderType) {
         String scheduled = TimeUtils.getCurrentTime();
 
+
         if(orderType == OrderType.DELIVERY){
             String userAddress = user.getAddress();
             return new DeliveryOrder(user , restaurant , items , cost ,  scheduled  ,userAddress);
