@@ -15,7 +15,7 @@ public class PlaylistManager {
         private final static PlaylistManager instance = new PlaylistManager();
     }
 
-    public PlaylistManager getPlaylistManager(){
+    public static PlaylistManager getInstance(){
         return Holder.instance;
     }
 
@@ -43,17 +43,17 @@ public class PlaylistManager {
         return playlists.get(name);
     }
 
-    public void addSong(Song song , String playlistName){
+    public void addSongToPlaylist(Song song , String playlistName){
         if(!playlists.containsKey(playlistName)){
-            throw new RuntimeException("No plalist with name " + playlistName);
+            throw new RuntimeException("No playlist with name " + playlistName);
         }
         Playlist playlist = playlists.get(playlistName);
         playlist.addSong(song);
     }
 
-    public void removeSong(Song song , String playlistName){
+    public void removeSongFromPlaylist(Song song , String playlistName){
         if(!playlists.containsKey(playlistName)){
-            throw new RuntimeException("No plalist with name " + playlistName);
+            throw new RuntimeException("No playlist with name " + playlistName);
         }
         Playlist playlist = playlists.get(playlistName);
         playlist.removeSong(song);

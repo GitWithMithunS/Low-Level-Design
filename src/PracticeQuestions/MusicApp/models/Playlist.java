@@ -19,6 +19,10 @@ public class Playlist {
         return songs;
     }
 
+    public int getSize(){
+        return songs.size();
+    }
+
     public void addSong(Song song){
         if(song == null){
             throw new RuntimeException("Song cant be null or empty");

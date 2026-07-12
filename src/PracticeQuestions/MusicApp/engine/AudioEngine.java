@@ -7,6 +7,14 @@ public class AudioEngine {
     private Song currSong;
     private boolean isPaused;
 
+    public Song getCurrSong() {
+        return currSong;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
     public void playSong(IAudioOutputDevice audioOutputDevice , Song song){
         if(song == null){
             throw new RuntimeException("Please select a Song to play");
