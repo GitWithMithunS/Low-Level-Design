@@ -26,7 +26,7 @@ public class AudioEngine {
         }
         isPaused = false;
         currSong = song;
-        System.out.println("Playing the song " + song.getName());
+//        System.out.println("Playing the song " + song.getName());
         audioOutputDevice.playSong(song);
     }
 

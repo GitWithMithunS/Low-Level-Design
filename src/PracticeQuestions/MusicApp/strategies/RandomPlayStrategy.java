@@ -1,5 +1,6 @@
 package PracticeQuestions.MusicApp.strategies;
 
+import PracticeQuestions.MusicApp.ENUM.PlayStrategyType;
 import PracticeQuestions.MusicApp.models.Playlist;
 import PracticeQuestions.MusicApp.models.Song;
 
@@ -17,11 +18,13 @@ public class RandomPlayStrategy implements IPlayStrategy{
     public RandomPlayStrategy(){
         currPlaylist = null;
         random = new Random();
-        remainingSongs = null;
+        remainingSongs = new ArrayList<>();
+        history = new Stack<>();
     }
 
     @Override
     public void setPlaylist(Playlist playlist) {
+        history.clear();
         currPlaylist = playlist;
         if (currPlaylist == null || currPlaylist.getSize() == 0) return;
         remainingSongs = new ArrayList<>(playlist.getSongs());
@@ -36,9 +39,9 @@ public class RandomPlayStrategy implements IPlayStrategy{
             throw new RuntimeException("No Songs left to play");
         }
 
-        int idx = random.nextInt()% remainingSongs.size();
+        int idx = random.nextInt(remainingSongs.size());
         Song song = remainingSongs.get(idx);
-        remainingSongs.remove(song);
+        remainingSongs.remove(idx);
         history.add(song);
         return song;
 
@@ -49,8 +52,7 @@ public class RandomPlayStrategy implements IPlayStrategy{
         if(history.isEmpty()){
             throw new RuntimeException("No Previous song to play");
         }
-        Song song = history.peek();
-        history.pop();
+        Song song = history.pop();
         remainingSongs.add(song);
         return song;
     }
@@ -63,5 +65,10 @@ public class RandomPlayStrategy implements IPlayStrategy{
     @Override
     public boolean hasPrevious() {
         return !history.empty();
+    }
+
+    @Override
+    public PlayStrategyType getPlayStrategyType() {
+        return PlayStrategyType.RANDOM;
     }
 }

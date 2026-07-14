@@ -1,112 +1,122 @@
 package PracticeQuestions.MusicApp.strategies;
 
+import PracticeQuestions.MusicApp.ENUM.PlayStrategyType;
 import PracticeQuestions.MusicApp.models.Playlist;
 import PracticeQuestions.MusicApp.models.Song;
-import PracticeQuestions.MusicApp.strategies.IPlayStrategy;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
 public class CustomPlayStrategy implements IPlayStrategy {
-    private PracticeQuestions.MusicApp.models.Playlist currentPlaylist;
+
+    private Playlist currentPlaylist;
+
+    // Position in the original playlist
     private int currentIndex;
+
+    // Currently playing song
+    private Song currentSong;
+
+    // Songs manually added to play next
     private final Queue<Song> nextQueue;
-    private final Stack<Song> prevStack;
+
+    // Playback history
+    private final Stack<Song> history;
 
     public CustomPlayStrategy() {
         currentPlaylist = null;
         currentIndex = -1;
+        currentSong = null;
         nextQueue = new LinkedList<>();
-        prevStack = new Stack<>();
+        history = new Stack<>();
     }
 
     @Override
     public void setPlaylist(Playlist playlist) {
         currentPlaylist = playlist;
         currentIndex = -1;
+        currentSong = null;
         nextQueue.clear();
-        prevStack.clear();
-    }
-
-    private Song nextSequential() {
-        if (currentPlaylist.getSize() == 0) {
-            throw new RuntimeException("Playlist is empty.");
-        }
-        currentIndex = currentIndex + 1;
-        return currentPlaylist.getSongs().get(currentIndex);
-    }
-
-    private Song previousSequential() {
-        if (currentPlaylist.getSize() == 0) {
-            throw new RuntimeException("Playlist is empty.");
-        }
-        currentIndex = currentIndex - 1;
-        return currentPlaylist.getSongs().get(currentIndex);
-    }
-
-    @Override
-    public boolean hasNext() {
-        return ((currentIndex + 1) < currentPlaylist.getSize());
+        history.clear();
     }
 
     @Override
     public Song next() {
-        if (currentPlaylist == null || currentPlaylist.getSize() == 0) {
-            throw new RuntimeException("No playlist loaded or playlist is empty.");
+
+        if (currentPlaylist == null) {
+            throw new RuntimeException("No playlist selected.");
         }
 
+        if (currentSong != null) {
+            history.push(currentSong);
+        }
+
+        // Play queued songs first
         if (!nextQueue.isEmpty()) {
-            Song s = nextQueue.poll();
-            prevStack.push(s);
-
-            // update index to match queued song
-            for (int i = 0; i < currentPlaylist.getSongs().size(); ++i) {
-                if (currentPlaylist.getSongs().get(i) == s) {
-                    currentIndex = i;
-                    break;
-                }
-            }
-            return s;
+            currentSong = nextQueue.poll();
+            return currentSong;
         }
 
-        // Otherwise sequential
-        return nextSequential();
-    }
+        // Continue sequential playback
+        if (currentIndex + 1 >= currentPlaylist.getSize()) {
+            throw new RuntimeException("No next song available.");
+        }
 
-    @Override
-    public boolean hasPrevious() {
-        return (currentIndex - 1 > 0);
+        currentIndex++;
+        currentSong = currentPlaylist.getSongs().get(currentIndex);
+
+        return currentSong;
     }
 
     @Override
     public Song previous() {
-        if (currentPlaylist == null || currentPlaylist.getSize() == 0) {
-            throw new RuntimeException("No playlist loaded or playlist is empty.");
+
+        if (history.isEmpty()) {
+            throw new RuntimeException("No previous song available.");
         }
 
-        if (!prevStack.isEmpty()) {
-            Song s = prevStack.pop();
+        currentSong = history.pop();
 
-            // update index to match stacked song
-            for (int i = 0; i < currentPlaylist.getSongs().size(); ++i) {
-                if (currentPlaylist.getSongs().get(i) == s) {
-                    currentIndex = i;
-                    break;
-                }
+        // Update playlist index only if this song belongs to playlist
+        for (int i = 0; i < currentPlaylist.getSongs().size(); i++) {
+            if (currentPlaylist.getSongs().get(i).equals(currentSong)) {
+                currentIndex = i;
+                break;
             }
-            return s;
         }
 
-        // Otherwise sequential
-        return previousSequential();
+        return currentSong;
+    }
+
+    @Override
+    public boolean hasNext() {
+
+        if (currentPlaylist == null) {
+            return false;
+        }
+
+        return !nextQueue.isEmpty()
+                || currentIndex + 1 < currentPlaylist.getSize();
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return !history.isEmpty();
     }
 
     @Override
     public void addToNext(Song song) {
+
         if (song == null) {
             throw new RuntimeException("Cannot enqueue null song.");
         }
-        nextQueue.add(song);
+
+        nextQueue.offer(song);
+    }
+
+    @Override
+    public PlayStrategyType getPlayStrategyType() {
+        return PlayStrategyType.CUSTOM;
     }
 }
