@@ -55,6 +55,14 @@ public class MusicPlayerFacade {
         audioEngine.pauseSong();
     }
 
+    public void createPlaylist(String playlistName) {
+        PlaylistManager.getInstance().createPlaylist(playlistName);
+    }
+
+    public void addSongToPlaylist(String playlistName, Song song) {
+        PlaylistManager.getInstance().addSongToPlaylist( song , playlistName);
+    }
+
     public void setCurrPlayStrategy(PlayStrategyType playStrategyType){
         currPlayStrategy = playStrategyManager.getPlayStrategy(playStrategyType);
     }

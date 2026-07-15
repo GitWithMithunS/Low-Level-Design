@@ -2,7 +2,6 @@ package PracticeQuestions.MusicApp;
 
 import PracticeQuestions.MusicApp.ENUM.DeviceType;
 import PracticeQuestions.MusicApp.ENUM.PlayStrategyType;
-import PracticeQuestions.MusicApp.managers.PlaylistManager;
 import PracticeQuestions.MusicApp.models.Song;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class MusicApplication {
     }
 
     public void createPlaylist(String playlistName) {
-        PlaylistManager.getInstance().createPlaylist(playlistName);
+        musicPlayerFacade.createPlaylist(playlistName);
     }
 
     public void addSongToPlaylist(String playlistName, String songTitle) {
@@ -53,7 +52,7 @@ public class MusicApplication {
         if (song == null) {
             throw new RuntimeException("Song \"" + songTitle + "\" not found in library.");
         }
-        PlaylistManager.getInstance().addSongToPlaylist( song , playlistName);
+        musicPlayerFacade.addSongToPlaylist(playlistName , song);
     }
 
     public void selectPlayStrategy(PlayStrategyType strategyType) {
