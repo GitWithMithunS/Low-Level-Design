@@ -1,7 +1,6 @@
 package PracticeQuestions.PaymentSystem.factories;
 
-import PracticeQuestions.PaymentSystem.ENUM.GatewayType;
-import PracticeQuestions.PaymentSystem.bankingSystem.PaytmbankingSystem;
+import PracticeQuestions.PaymentSystem.enums.GatewayType;
 import PracticeQuestions.PaymentSystem.gateway.PaymentGateway;
 import PracticeQuestions.PaymentSystem.gateway.PaymentGatewayProxy;
 import PracticeQuestions.PaymentSystem.gateway.PaytmPaymentGateway;

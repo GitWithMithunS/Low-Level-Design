@@ -1,6 +1,6 @@
 package PracticeQuestions.PaymentSystem;
 
-import PracticeQuestions.PaymentSystem.ENUM.GatewayType;
+import PracticeQuestions.PaymentSystem.enums.GatewayType;
 import PracticeQuestions.PaymentSystem.controller.PaymentController;
 import PracticeQuestions.PaymentSystem.model.PaymentRequest;
 
