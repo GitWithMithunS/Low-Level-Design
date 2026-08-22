@@ -14,7 +14,7 @@ public class GatewayFactory {
         if(gt == GatewayType.PAYTM){
             return new PaymentGatewayProxy(new PaytmPaymentGateway() , 3);
         }else if(gt == GatewayType.RAZORPAY){
-            return new PaymentGatewayProxy(new RazorPayPaymentGateway() , 5);
+            return new PaymentGatewayProxy(new RazorPayPaymentGateway() , 4);
         }
         System.out.println("The requested Payment Method is not available");
         return null;
