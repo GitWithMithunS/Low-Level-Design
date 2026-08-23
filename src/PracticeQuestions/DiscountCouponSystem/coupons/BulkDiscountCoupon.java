@@ -19,7 +19,7 @@ public class BulkDiscountCoupon extends Coupon {
 
     @Override
     public double getDiscount(Cart cart) {
-        return discountstrategy.calculateDiscount(cart.getoriginalTotal());
+        return discountstrategy.calculateDiscount(cart.getCurrentTotal());
     }
 
     @Override
