@@ -7,22 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-    private List<CartItem> itemList = new ArrayList<>();
-    private boolean loyaltyMember;
+    private List<CartItem> itemList ;
+    private boolean loyaltyMember = false;
     private String paymentBank = null;
     private double originalTotal;
     private double currentTotal;
 //    private CouponManager;
 
-    public Cart(boolean loyaltyMember){
-      this.loyaltyMember = loyaltyMember;
+    public Cart(){
+        itemList = new ArrayList<>();
         currentTotal = 0;
         originalTotal = 0;
     }
 
     public void addProduct(Product product, int quantity){
         CartItem cartItem = new CartItem(product , quantity);
+        itemList.add(cartItem);
         originalTotal += cartItem.getTotalPrice();
+        currentTotal = originalTotal;
     }
 
     public void applyDiscount(double discountAmt){
@@ -57,5 +59,12 @@ public class Cart {
 
     public void setLoyalityMember(boolean loyaltyMember) {
         this.loyaltyMember = loyaltyMember;
+    }
+
+    public void printCart(){
+        for(CartItem cartItem : itemList){
+            System.out.println(cartItem.getProduct().getName() + " - qunatity(" + cartItem.getQuantity() +") - subTotal(" + cartItem.getTotalPrice() +") " );
+        }
+        System.out.println( "\n[Original Cart Total] : " + originalTotal + "Rs");
     }
 }

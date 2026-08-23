@@ -15,7 +15,7 @@ public abstract class Coupon {
             System.out.println(getName() + " is Applicable on your cart");
             double dis = getDiscount(cart);
             cart.applyDiscount(dis);
-            System.out.println(getName() + " applied on Cart ");
+            System.out.println("[DISCOUNT APPLIED] : "+ dis + " using " + getName() + " coupon applied on Cart \n");
         }
 
         if(!isCombinable()){
@@ -31,9 +31,11 @@ public abstract class Coupon {
         return true;
     };
 
+    public Coupon getNext(){
+         return nxt;
+    }
+
     public abstract boolean isApplicable(Cart cart);
     public abstract double getDiscount(Cart cart);
-    public abstract void setIsCombinable();
     public abstract String getName();
-
 }

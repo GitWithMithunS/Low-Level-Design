@@ -19,4 +19,9 @@ public class PercentageDiscountStrategy implements IDiscountStrategy{
     public double calculateDiscount(double amt) {
         return percentageRate*amt/100;
     }
+
+    @Override
+    public String getOffer() {
+        return "Percentage " + percentageRate + " Off";
+    }
 }

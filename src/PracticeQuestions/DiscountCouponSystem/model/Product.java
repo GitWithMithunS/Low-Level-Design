@@ -3,7 +3,13 @@ package PracticeQuestions.DiscountCouponSystem.model;
 public class Product {
     private String name;
     private String category;
-    private Double price;
+    private double price;
+
+    public Product(String name, String category, Double price) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+    }
 
     public String getName() {
         return name;

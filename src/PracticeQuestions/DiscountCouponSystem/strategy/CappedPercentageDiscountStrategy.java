@@ -30,4 +30,9 @@ public class CappedPercentageDiscountStrategy implements IDiscountStrategy{
     public double calculateDiscount(double amt) {
         return Math.min( percentageRate*amt/100 , cap );
     }
+
+    @Override
+    public String getOffer() {
+        return "Percentage " + percentageRate + " Off upto " + cap ;
+    }
 }
