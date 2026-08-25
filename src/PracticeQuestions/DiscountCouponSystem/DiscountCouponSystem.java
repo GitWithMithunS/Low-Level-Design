@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DiscountCouponSystem {
     public static void main(String[] args){
-        System.out.println("Discount Coupon System\n");
+        System.out.println("\nDISCOUNT COUPON SYSTEM----------------------------------\n");
 
         //client , chooses Discount Strategy
         DiscountManager discountManager = DiscountManager.getInstance();
