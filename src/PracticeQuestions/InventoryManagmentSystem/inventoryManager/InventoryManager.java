@@ -9,49 +9,89 @@ import PracticeQuestions.InventoryManagmentSystem.observers.InventoryObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-///singleton class
 public class InventoryManager {
-    private final List<Warehouse> warehouseLst;
+
+    private final List<Warehouse> warehouses;
     private final List<InventoryObserver> observers;
+
     private ReplenishStrategy replenishStrategy;
 
-    private InventoryManager(ReplenishStrategy replenishStrategy){
-        warehouseLst = new ArrayList<>();
-        observers = new ArrayList<>();
+    private InventoryManager( ReplenishStrategy replenishStrategy) {
+        this.warehouses = new ArrayList<>();
+        this.observers = new ArrayList<>();
         this.replenishStrategy = replenishStrategy;
     }
 
-    public static class Holder{
-        public static final InventoryManager instance = new InventoryManager(new ThresholdReplenishStrategy());
+    private static class Holder {
+        private static final InventoryManager INSTANCE = new InventoryManager(new ThresholdReplenishStrategy());
     }
 
-    public InventoryManager getInstance(){
-        return Holder.instance;
+    public static InventoryManager getInstance() {
+        return Holder.INSTANCE;
     }
 
-    public void setReplenishStrategy(ReplenishStrategy replenishStrategy){
+    public void setReplenishStrategy( ReplenishStrategy replenishStrategy) {
         this.replenishStrategy = replenishStrategy;
     }
 
-    public void addWareHouse(Warehouse warehouse){
-        warehouseLst.add(warehouse);
+    public void addWarehouse(Warehouse warehouse) {
+        warehouses.add(warehouse);
     }
 
-    public void removeWareHouse(Warehouse warehouse){
-        warehouseLst.remove(warehouse);
+    public void removeWarehouse(Warehouse warehouse) {
+        warehouses.remove(warehouse);
     }
 
-    public void addInventoryObservers(InventoryObserver inventoryObserver){
-        observers.add(inventoryObserver);
+    public void addObserver( InventoryObserver observer) {
+        observers.add(observer);
     }
 
-    public void removeInventoryObservers(InventoryObserver inventoryObserver){
-        observers.remove(inventoryObserver);
+    public void removeObserver( InventoryObserver observer) {
+        observers.remove(observer);
     }
 
-    public void notifyObservers(Warehouse warehouse){
+    private void notifyObservers( Warehouse warehouse, Product product, int remainingQty) {
+        for(InventoryObserver observer : observers) {
+            observer.update( warehouse, product, remainingQty);
+        }
     }
 
+    public void addStock(Warehouse warehouse, String sku, int qty) {
+        Product product = warehouse.getProduct(sku);
+        warehouse.addStock(product, qty);
+    }
 
+    public void removeStock(Warehouse warehouse, String sku , int qty) {
+        boolean removed = warehouse.removeStock(sku, qty);
 
+        if(!removed) return;
+
+        Product product = warehouse.getProduct(sku);
+        int currentQty = product.getQuantity();
+
+        if(currentQty < product.getThreshold()) {
+            notifyObservers( warehouse, product, currentQty);
+            replenishStrategy.replenishStock( warehouse.getInventory(), product);
+        }
+    }
+
+    public int checkStock(Warehouse warehouse, String sku) {
+        return warehouse.getQuantity(sku);
+    }
+
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
+    }
+
+    public void checkAndReplenishAllWarehouses(){
+        for(Warehouse warehouse : warehouses){
+            replenishStrategy.checkAndReplenishAll(warehouse.getInventory());
+        }
+    }
+
+    public void listAllWarehousesInventory(){
+        for(Warehouse w : warehouses){
+            w.listAllProducts();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package PracticeQuestions.InventoryManagmentSystem.observers;
 
+import PracticeQuestions.InventoryManagmentSystem.Warehouse.Warehouse;
 import PracticeQuestions.InventoryManagmentSystem.model.Product;
 
 public class SupplierObserver implements InventoryObserver{
@@ -11,14 +12,15 @@ public class SupplierObserver implements InventoryObserver{
         this.email = email;
     }
 
+
+
+
     @Override
-    public void update(Product product) {
+    public void update(Warehouse warehouse, Product product, int remainingQuantity) {
         if (product.getQuantity() < product.getThreshold()) {
             // Send email notification to supplier
-            System.out.println("Notification sent to " + supplierName
-                    + " for low stock of " + product.getName());
+            System.out.println("[Notification] : Notifying " + supplierName
+                    + " for low stock of " + product.getName() + " in Warehouse " + warehouse.getName() + " located at " + warehouse.getLocation());
         }
     }
-
-
 }

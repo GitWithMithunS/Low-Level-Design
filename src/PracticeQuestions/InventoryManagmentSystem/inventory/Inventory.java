@@ -1,69 +1,63 @@
 package PracticeQuestions.InventoryManagmentSystem.inventory;
 
 import PracticeQuestions.InventoryManagmentSystem.model.Product;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
-    private final Map<String , Product> items;  //sku -> product
 
-    public Inventory(){
-        items = new HashMap<>();
+    private final Map<String, Product> items;
+
+    public Inventory() {
+        this.items = new HashMap<>();
     }
 
-    public Product addProduct(Product product , int quantity){
+    public void addProduct(Product product, int quantity) {
+
         String sku = product.getSku();
-        if(items.containsKey(sku)){
-            Product p = items.get(sku);
-            p.addQuantity(quantity);
-        }else{
-            product.setQuantity(quantity);
-            items.put(sku , product);
+
+        if(items.containsKey(sku)) {
+            items.get(sku).addQuantity(quantity);
         }
-        return items.get(product);
+        else {
+            product.setQuantity(quantity);
+            items.put(sku, product);
+        }
     }
 
-    public boolean removeProduct(String sku , int quantity){
-        if(items.containsKey(sku)){
-            System.out.println("No Product with " + sku + " present in the warehouse" );
+    public boolean removeProduct(String sku, int quantity) {
+
+        Product product = items.get(sku);
+
+        if(product == null) {
             return false;
         }
-        Product p = items.get(sku);
-        p.removeQuantity(quantity);
-        if(p.getQuantity() == 0)  items.remove(sku);
 
-        System.out.println("Product " + p.getName() + " removed from inventory as quantity is now zero.");
+        if(product.getQuantity() < quantity) {
+            return false;
+        }
+
+        product.removeQuantity(quantity);
+
+        if(product.getQuantity() == 0) {
+            items.remove(sku);
+        }
+
         return true;
     }
 
-    public void listAllProducts(){
-        System.out.println("----------Listing All Stock in the Warehouse ----------");
-        for(Map.Entry<String, Product> p : items.entrySet()){
-            System.out.println("Name: " + p.getKey() + " -> quantity: " + p.getValue() + " price: " + p.getValue().getPrice() );
-        }
-        System.out.println("--------------------------------------------------------");
-    }
-
-    public Product getProductBySku(String sku){
-        if(items.containsKey(sku)){
-            System.out.println("No Product with " + sku + " present in the warehouse" );
-            return null;
-        }
+    public Product getProductBySku(String sku) {
         return items.get(sku);
     }
 
-    public int getAvailableQuantity(String sku){
-        if(!items.containsKey(sku)) return 0;
-        return items.get(sku).getQuantity();
+    public int getAvailableQuantity(String sku) {
+        Product product = items.get(sku);
+        return product == null ? 0 : product.getQuantity();
     }
 
-    public Map<String , Product> getInventory(){
+    public Map<String, Product> getAllProducts() {
         return items;
-    }
-
-    public boolean isBelowThreshold(String sku){
-        Product p = items.get(sku);
-        if(p.getQuantity() < p.getThreshold()) return true;
-        return false;
     }
 }

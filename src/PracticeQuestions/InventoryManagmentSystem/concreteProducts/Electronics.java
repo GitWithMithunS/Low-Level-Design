@@ -1,6 +1,7 @@
 package PracticeQuestions.InventoryManagmentSystem.concreteProducts;
 
 import PracticeQuestions.InventoryManagmentSystem.model.Product;
+import PracticeQuestions.InventoryManagmentSystem.utility.SKUGenerator;
 
 //builder pattern for complex product.
 //if we have multiple complex product then we can extend an abstract builder product class form the simple product model class. and then extend that productbuilder class to build those proiducts.
@@ -12,10 +13,10 @@ public class Electronics extends Product {
     private final boolean wirelessConnectivity;
 
     private Electronics(Builder builder) {
-
+        String sku = SKUGenerator.generateElectronicsSKU();
         super(
                 builder.name,
-                builder.sku,
+                sku,
                 builder.price,
                 builder.threshold,
                 builder.quantity
@@ -31,7 +32,6 @@ public class Electronics extends Product {
 
         // Required Product fields
         private String name;
-        private String sku;
         private double price;
         private int threshold;
         private int quantity;
@@ -46,14 +46,12 @@ public class Electronics extends Product {
 
         public Builder(
                 String name,
-                String sku,
                 double price,
                 int threshold,
                 int quantity,
                 String brand) {
 
             this.name = name;
-            this.sku = sku;
             this.price = price;
             this.threshold = threshold;
             this.quantity = quantity;

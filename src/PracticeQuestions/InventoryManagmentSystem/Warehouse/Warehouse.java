@@ -3,40 +3,66 @@ package PracticeQuestions.InventoryManagmentSystem.Warehouse;
 import PracticeQuestions.InventoryManagmentSystem.inventory.Inventory;
 import PracticeQuestions.InventoryManagmentSystem.model.Product;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Map;
 
 public class Warehouse {
-    private String name;
-    private String location;
-    private int id;
-    private Inventory inventory;
 
-    public Warehouse(String name , String location , int id){
+    private final String name;
+    private final String location;
+    private final int id;
+
+    private final Inventory inventory;
+
+    public Warehouse(String name, String location, int id) {
         this.name = name;
         this.location = location;
         this.id = id;
+        this.inventory = new Inventory();
     }
 
-    public void addProduct(Product product , int quantity){
-        Product p = inventory.addProduct(product , quantity);
-        System.out.println(quantity + " units of " + product.getName()
-                + " (SKU: " + p.getSku() + ") added to " + name
-                + ". New quantity: " + p.getQuantity() );
+    public void addStock(Product product, int quantity) {
+        inventory.addProduct(product, quantity);
     }
 
-    //delegation methods
-    public void removeProduct(String sku , int quantity){
-        boolean removed = inventory.removeProduct(sku , quantity);
+    public boolean removeStock(String sku, int quantity) {
+        return inventory.removeProduct(sku, quantity);
     }
 
-    public void listInventory(){
-        inventory.listAllProducts();
+    public int getQuantity(String sku) {
+        return inventory.getAvailableQuantity( sku );
+    }
+
+    public Product getProduct(String sku) {
+        return inventory.getProductBySku(sku);
+    }
+
+    public Map<String, Product> getAllProducts() {
+        return inventory.getAllProducts();
+    }
+
+    public void listAllProducts(){
+        Map<String , Product> items = inventory.getAllProducts();
+        System.out.println("------Listing All Stock in the Warehouse [" + name + "] --------");
+        for(Map.Entry<String, Product> p : items.entrySet()){
+            System.out.println("Name: [" + p.getKey() +  "] "+ p.getValue().getName() + " -> quantity: " + p.getValue().getQuantity() + " -> price: " + p.getValue().getPrice() );
+        }
+        System.out.println("---------------------------------------------------------------------");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Inventory getInventory(){
         return inventory;
     }
-
-
 }
