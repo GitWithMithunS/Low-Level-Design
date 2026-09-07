@@ -13,14 +13,12 @@ public class SupplierObserver implements InventoryObserver{
     }
 
 
-
-
     @Override
     public void update(Warehouse warehouse, Product product, int remainingQuantity) {
         if (product.getQuantity() < product.getThreshold()) {
             // Send email notification to supplier
             System.out.println("[Notification] : Notifying " + supplierName
-                    + " for low stock of " + product.getName() + " in Warehouse " + warehouse.getName() + " located at " + warehouse.getLocation());
+                    + " for low stock of " + product.getName() + " in " + warehouse.getName() + " located at " + warehouse.getLocation());
         }
     }
 }

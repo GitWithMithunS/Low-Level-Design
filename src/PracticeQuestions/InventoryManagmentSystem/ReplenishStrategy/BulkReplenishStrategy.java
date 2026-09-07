@@ -7,7 +7,7 @@ import java.util.Map;
 public class BulkReplenishStrategy implements ReplenishStrategy{
     private int stockQuantity;
 
-    public BulkReplenishStrategy(int stokeQuantity){
+    public BulkReplenishStrategy(int stockQuantity){
         this.stockQuantity = stockQuantity;
     }
 

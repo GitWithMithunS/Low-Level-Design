@@ -1,6 +1,4 @@
-package PracticeQuestions.InventoryManagmentSystem.concreteProducts;
-
-import PracticeQuestions.InventoryManagmentSystem.model.Product;
+package PracticeQuestions.InventoryManagmentSystem.model;
 
 import java.util.Date;
 

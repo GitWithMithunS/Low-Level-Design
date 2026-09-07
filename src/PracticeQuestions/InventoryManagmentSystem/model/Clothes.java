@@ -1,6 +1,5 @@
-package PracticeQuestions.InventoryManagmentSystem.concreteProducts;
+package PracticeQuestions.InventoryManagmentSystem.model;
 
-import PracticeQuestions.InventoryManagmentSystem.model.Product;
 import PracticeQuestions.InventoryManagmentSystem.utility.SKUGenerator;
 
 public class Clothes extends Product {
@@ -8,8 +7,7 @@ public class Clothes extends Product {
     private String color;
 
     public Clothes( String name, double price, int threshold, int quantity) {
-        String sku = SKUGenerator.generateClothesSKU();
-        super(name, sku, price, threshold, quantity);
+        super(name, SKUGenerator.generateClothesSKU(), price, threshold, quantity);
     }
 
     public String getColor() {

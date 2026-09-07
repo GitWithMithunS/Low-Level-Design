@@ -1,4 +1,4 @@
-package PracticeQuestions.InventoryManagmentSystem.ENUM;
+package PracticeQuestions.InventoryManagmentSystem.enums;
 
 public enum ProductCategory {
     CLOTHING , ELECTRONICS, GROCERY , SPORTS , FURNITURE , FASHION ;

@@ -1,6 +1,5 @@
-package PracticeQuestions.InventoryManagmentSystem.concreteProducts;
+package PracticeQuestions.InventoryManagmentSystem.model;
 
-import PracticeQuestions.InventoryManagmentSystem.model.Product;
 import PracticeQuestions.InventoryManagmentSystem.utility.SKUGenerator;
 
 //builder pattern for complex product.
@@ -12,11 +11,11 @@ public class Electronics extends Product {
     private final int warranty;
     private final boolean wirelessConnectivity;
 
+    //super must always be the first line of child constructor
     private Electronics(Builder builder) {
-        String sku = SKUGenerator.generateElectronicsSKU();
         super(
                 builder.name,
-                sku,
+                SKUGenerator.generateElectronicsSKU(),
                 builder.price,
                 builder.threshold,
                 builder.quantity

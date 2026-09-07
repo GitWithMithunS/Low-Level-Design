@@ -3,6 +3,7 @@ package PracticeQuestions.InventoryManagmentSystem.inventory;
 import PracticeQuestions.InventoryManagmentSystem.model.Product;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +58,9 @@ public class Inventory {
         return product == null ? 0 : product.getQuantity();
     }
 
+    //sending the map as is cna be mutated adn may case irregularities. [security threat]
     public Map<String, Product> getAllProducts() {
-        return items;
+//        return items;
+        return Collections.unmodifiableMap(items);
     }
 }

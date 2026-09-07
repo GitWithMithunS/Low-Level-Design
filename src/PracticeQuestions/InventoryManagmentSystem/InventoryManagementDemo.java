@@ -1,8 +1,8 @@
 package PracticeQuestions.InventoryManagmentSystem;
 
 import PracticeQuestions.InventoryManagmentSystem.Warehouse.Warehouse;
-import PracticeQuestions.InventoryManagmentSystem.concreteProducts.Clothes;
-import PracticeQuestions.InventoryManagmentSystem.concreteProducts.Electronics;
+import PracticeQuestions.InventoryManagmentSystem.model.Clothes;
+import PracticeQuestions.InventoryManagmentSystem.model.Electronics;
 import PracticeQuestions.InventoryManagmentSystem.inventoryManager.InventoryManager;
 import PracticeQuestions.InventoryManagmentSystem.observers.DashboardAlertSystem;
 import PracticeQuestions.InventoryManagmentSystem.observers.SupplierObserver;
@@ -32,10 +32,7 @@ public class InventoryManagementDemo {
         // ==========================
         // Observers
         // ==========================
-        SupplierObserver supplierObserver = new SupplierObserver(
-                        "Dipender Goyal Supplier",
-                        "dipender@supplier.com"
-                );
+        SupplierObserver supplierObserver = new SupplierObserver("Dipender Goyal Supplier", "dipender@supplier.com");
 
         DashboardAlertSystem dashboardObserver = new DashboardAlertSystem(
                                         "HIGH",
@@ -54,7 +51,7 @@ public class InventoryManagementDemo {
         Clothes tshirt = new Clothes("Puma T-Shirt", 999.0, 20,  7);
         tshirt.setColor("Black");
         tshirt.setSize(42);
-        Clothes pants = new Clothes("Puma Pants", 1599.0, 20,  12);
+        Clothes pants = new Clothes("Puma Pants", 1599.0, 30,  22);
 
 
         // ==========================

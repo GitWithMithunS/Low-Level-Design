@@ -21,7 +21,7 @@ public class ThresholdReplenishStrategy implements ReplenishStrategy{
         for(Map.Entry<String , Product> productEntry : items.entrySet() ){
             Product p = productEntry.getValue();
             if(p.getQuantity() < p.getThreshold()){
-                p.setQuantity(10*p.getThreshold());
+                p.addQuantity(10*p.getThreshold());
             }
         }
     }
